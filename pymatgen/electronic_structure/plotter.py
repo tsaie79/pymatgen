@@ -147,6 +147,7 @@ class DosPlotter:
         for key, dos in self._doses.items():
             energies = dos['energies']
             densities = dos['densities']
+            line_style = dos["line_style"]
             if not y:
                 y = {Spin.up: np.zeros(energies.shape),
                      Spin.down: np.zeros(energies.shape)}
@@ -183,14 +184,17 @@ class DosPlotter:
                 plt.fill(x, y, color=colors[i % ncolors],
                          label=str(key))
             else:
-                plt.plot(x, y, color=colors[i % ncolors],
-                         label=str(key), linewidth=3)
-            if not self.zero_at_efermi:
-                ylim = plt.ylim()
-                plt.plot([self._doses[key]['efermi'],
-                          self._doses[key]['efermi']], ylim,
-                         color=colors[i % ncolors],
-                         linestyle='--', linewidth=2)
+                if self._doses[list(self._doses.keys())[i]]["line_style"]:
+                    plt.plot(x, y, color=colors[i % ncolors],
+                                label=str(key), linewidth=3, linestyle=self._doses[key]["line_style"])
+                else:
+                    plt.plot(x, y, color=colors[i % ncolors], label=str(key), linewidth=3)
+            #if not self.zero_at_efermi:
+             #   ylim = plt.ylim()
+              #  plt.plot([self._doses[key]['efermi'],
+               #           self._doses[key]['efermi']], ylim,
+                #         color=colors[i % ncolors],
+                 #        linestyle='--', linewidth=2)
 
         if xlim:
             plt.xlim(xlim)
