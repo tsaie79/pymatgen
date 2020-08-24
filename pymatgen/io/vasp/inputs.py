@@ -1255,17 +1255,8 @@ class Kpoints(MSONable):
         is_hexagonal = latt.is_hexagonal()
 
         has_odd = any([i % 2 == 1 for i in num_div])
-        #if has_odd or is_hexagonal or force_gamma:
-         #if has_odd or is_hexagonal or force_gamma:
-         #    style = Kpoints.supported_modes.Gamma
-        if force_gamma:
+        if has_odd or is_hexagonal or force_gamma:
             style = Kpoints.supported_modes.Gamma
-        elif has_odd:
-            style = Kpoints.supported_modes.Monkhorst
-            if num_div[0] % 2 == 1:
-                num_div[0] = num_div[0] + 1
-            if num_div[1] % 2 == 1:
-                num_div[1] = num_div[1] + 1
         else:
             style = Kpoints.supported_modes.Monkhorst
 
