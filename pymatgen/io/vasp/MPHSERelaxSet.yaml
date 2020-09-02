@@ -14,6 +14,7 @@ INCAR:
   LHFCALC: true
   LORBIT: 11
   LREAL: AUTO
+  LASPH: true
   LWAVE: false
   NELM: 100
   NSW: 99
