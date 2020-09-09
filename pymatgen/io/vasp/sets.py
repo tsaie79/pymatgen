@@ -2705,8 +2705,6 @@ class MVLScanRelaxSet(MPRelaxSet):
 
         updates = {
             "ADDGRID": True,
-            "EDIFF": 1e-05,
-            "EDIFFG": -0.05,
             "LASPH": True,
             "LDAU": False,
             "LMIXTAU": True,
