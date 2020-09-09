@@ -74,7 +74,7 @@ class DosPlotter:
         self.sigma = sigma
         self._doses = OrderedDict()
 
-    def add_dos(self, label, dos):
+    def add_dos(self, label, dos, line_style):
         """
         Adds a dos for plotting.
 
@@ -90,9 +90,9 @@ class DosPlotter:
             else dos.densities
         efermi = dos.efermi
         self._doses[label] = {'energies': energies, 'densities': densities,
-                              'efermi': efermi}
+                              'efermi': efermi, "line_style": line_style}
 
-    def add_dos_dict(self, dos_dict, key_sort_func=None):
+    def add_dos_dict(self, dos_dict, line_styles, key_sort_func=None):
         """
         Add a dictionary of doses, with an optional sorting function for the
         keys.
@@ -105,8 +105,8 @@ class DosPlotter:
             keys = sorted(dos_dict.keys(), key=key_sort_func)
         else:
             keys = dos_dict.keys()
-        for label in keys:
-            self.add_dos(label, dos_dict[label])
+        for label, line_style in zip(keys, line_styles):
+            self.add_dos(label, dos_dict[label], line_style)
 
     def get_dos_dict(self):
         """
