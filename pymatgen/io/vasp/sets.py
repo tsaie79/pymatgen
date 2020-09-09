@@ -2709,6 +2709,7 @@ class MVLScanRelaxSet(MPRelaxSet):
             "EDIFFG": -0.05,
             "LASPH": True,
             "LDAU": False,
+            "LMIXTAU": True,
             "METAGGA": "SCAN",
             "NELM": 200,
         }
