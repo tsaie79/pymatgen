@@ -2698,7 +2698,7 @@ class MVLScanRelaxSet(MPRelaxSet):
         if kwargs.get("potcar_functional") or kwargs.get("user_potcar_functional"):
             super().__init__(structure, **kwargs)
         else:
-            super().__init__(structure, user_potcar_functional="PBE_52", **kwargs)
+            super().__init__(structure, user_potcar_functional="PBE_54", **kwargs)
 
         if self.potcar_functional not in ["PBE_52", "PBE_54"]:
             raise ValueError("SCAN calculations required PBE_52 or PBE_54!")
