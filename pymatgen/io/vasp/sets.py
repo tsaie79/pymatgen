@@ -1391,6 +1391,7 @@ class MPNonSCFSet(MPRelaxSet):
             copy_chgcar=True,
             nbands_factor=1.2,
             small_gap_multiply=None,
+            two_d_kpoints=False,
             **kwargs
     ):
         """
@@ -1432,6 +1433,7 @@ class MPNonSCFSet(MPRelaxSet):
         self.copy_chgcar = copy_chgcar
         self.nbands_factor = nbands_factor
         self.small_gap_multiply = small_gap_multiply
+        self.two_d_kpoints = two_d_kpoints
 
         if self.mode.lower() not in ["line", "uniform", "boltztrap"]:
             raise ValueError(
@@ -1505,14 +1507,25 @@ class MPNonSCFSet(MPRelaxSet):
             frac_k_points, k_points_labels = kpath.get_kpoints(
                 line_density=self.kpoints_line_density, coords_are_cartesian=False
             )
+
+            two_d_kpt, two_d_kpt_label = [], []
+            if self.two_d_kpoints:
+                for kpt, klabel in zip(frac_k_points, k_points_labels):
+                    if round(kpt[2], 1) == 0:
+                        two_d_kpt.append(kpt)
+                        two_d_kpt_label.append(klabel)
+            else:
+                two_d_kpt, two_d_kpt_label = frac_k_points, k_points_labels
+
             kpoints = Kpoints(
                 comment="Non SCF run along symmetry lines",
                 style=Kpoints.supported_modes.Reciprocal,
-                num_kpts=len(frac_k_points),
-                kpts=frac_k_points,
-                labels=k_points_labels,
-                kpts_weights=[1] * len(frac_k_points),
+                num_kpts=len(two_d_kpt),
+                kpts=two_d_kpt,
+                labels=two_d_kpt_label,
+                kpts_weights=[1] * len(two_d_kpt),
             )
+
         elif self.mode.lower() == "boltztrap":
             kpoints = Kpoints.automatic_density_by_vol(
                 self.structure, self.reciprocal_density
