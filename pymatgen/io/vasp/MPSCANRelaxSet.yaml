@@ -20,7 +20,8 @@ INCAR:
   LAECHG: True  # Output AECCAR
   LELF: True  # Output ELFCAR
   LWAVE: False # Don't output WAVECAR
-  LVTOT: True # Output LOCPOT
+#  LVTOT: True # Output LOCPOT
+  LVHAR: True
   METAGGA: SCAN
   NELM: 200
   NSW: 99
