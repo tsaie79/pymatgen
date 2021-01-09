@@ -1216,6 +1216,7 @@ class MPHSEBSSet(MPHSERelaxSet):
             reciprocal_density=None,
             copy_chgcar=True,
             kpoints_line_density=20,
+            two_d_kpoints=False,
             **kwargs
     ):
         """
@@ -1255,6 +1256,8 @@ class MPHSEBSSet(MPHSERelaxSet):
         self.kpoints_line_density = kpoints_line_density
         self.copy_chgcar = copy_chgcar
 
+        self.two_d_kpoints = two_d_kpoints
+
     @property
     def kpoints(self) -> Kpoints:
         """
@@ -1287,6 +1290,14 @@ class MPHSEBSSet(MPHSERelaxSet):
             frac_k_points, labels = kpath.get_kpoints(
                 line_density=self.kpoints_line_density, coords_are_cartesian=False
             )
+
+            two_d_kpt, two_d_kpt_label = [], []
+            if self.two_d_kpoints:
+                for kpt, klabel in zip(frac_k_points, labels):
+                    if round(kpt[2], 1) == 0:
+                        two_d_kpt.append(kpt)
+                        two_d_kpt_label.append(klabel)
+                frac_k_points, labels = two_d_kpt, two_d_kpt_label
 
             for k, f in enumerate(frac_k_points):
                 kpts.append(f)
