@@ -1730,7 +1730,7 @@ class MPSOCSet(MPStaticSet):
         # the final calculated magmoms
         # TODO: revisit in context of MPStaticSet incar logic
         if "MAGMOM" in self.prev_incar:
-            del self.prev_incar["magmom"]
+            del self.prev_incar["MAGMOM"]
 
         # Get a magmom-decorated structure
         self._structure = get_structure_from_prev_run(vasprun, outcar)
